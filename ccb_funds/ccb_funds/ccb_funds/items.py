@@ -35,7 +35,12 @@ class CiticbankFundsItem(scrapy.Item):
     pfloor = scrapy.Field()
     pperiod = scrapy.Field()
 
+class HxbFundsItem(scrapy.Item):
+    pid = scrapy.Field()
+    pname = scrapy.Field()
+    prate = scrapy.Field()
+    pfloor = scrapy.Field()
+    pperiod = scrapy.Field()
+
 class FindBkItem(scrapy.Item):
-    # define the fields for your item here like:
-    name = scrapy.Field()
-    pass
+    pname = scrapy.Field()
