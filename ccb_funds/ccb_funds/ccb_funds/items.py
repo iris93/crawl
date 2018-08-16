@@ -42,5 +42,19 @@ class HxbFundsItem(scrapy.Item):
     pfloor = scrapy.Field()
     pperiod = scrapy.Field()
 
+class CebFundsItem(scrapy.Item):
+    pid = scrapy.Field()
+    pname = scrapy.Field()
+    prate = scrapy.Field()
+    pfloor = scrapy.Field()
+    pperiod = scrapy.Field()
+
+class PinganFundsItem(scrapy.Item):
+    pid = scrapy.Field()
+    pname = scrapy.Field()
+    prate = scrapy.Field()
+    pfloor = scrapy.Field()
+    pperiod = scrapy.Field()
+
 class FindBkItem(scrapy.Item):
     pname = scrapy.Field()
