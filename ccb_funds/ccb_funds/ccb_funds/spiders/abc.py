@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# 农业银行
 import scrapy
 import json
 import re
@@ -8,7 +9,7 @@ class Pinganbank(scrapy.Spider):
     allowed_domains = ["abc.com"]
     start_urls = ['http://ewealth.abchina.com/app/data/api/DataService/BoeProductV2?s=20&o=0&w=%25E5%258F%25AF%25E5%2594%25AE%257C%257C%257C%257C%257C%257C%257C1%257C%257C0%257C%257C0&i=']
     def start_requests(self):
-        for i in range(1,6):
+        for i in range(1,7):
             yield scrapy.FormRequest(
                 url = self.start_urls[0]+str(i),
                 method = 'GET',

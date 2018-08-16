@@ -22,9 +22,9 @@ class CcbFundsPipeline(object):
         temp = []
         temp.append(dict(item))
         text = json.dumps(temp, ensure_ascii=False)
-        dft=pd.read_json(text,orient='records')
+        dft=pd.read_json(text,orient='records',encoding='utf_8_sig')
         try:
-            dfin = pd.read_csv("{}_funds.csv".format(spider.name),encoding='utf_8_sig') 
+            dfin = pd.read_csv("{}_funds.csv".format(spider.name)) 
             self.dfout = dfin.append(dft)
         except IOError:
             self.dfout = dft
