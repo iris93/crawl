@@ -3,7 +3,7 @@
 import scrapy
 import json
 import re
-from ccb_funds.items import AbcFundsItem
+from ccb_funds.items import FundsInfoItem
 class Pinganbank(scrapy.Spider):
     name = "abc"
     allowed_domains = ["abc.com"]
@@ -20,7 +20,7 @@ class Pinganbank(scrapy.Spider):
         datas=response.xpath('//Table')
         print len(datas)
         for data in datas:
-            item = AbcFundsItem()
+            item = FundsInfoItem()
             item["pid"] = data.xpath('./ProductNo/text()').extract()[0]
             item["pname"] = data.xpath('./ProdName/text()').extract()[0]
             item["prate"] = data.xpath('./ProdProfit/text()').extract()[0]

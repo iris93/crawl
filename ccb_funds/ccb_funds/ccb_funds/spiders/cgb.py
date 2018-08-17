@@ -3,7 +3,7 @@
 import scrapy
 import json
 import re
-from ccb_funds.items import CgbFundsItem
+from ccb_funds.items import FundsInfoItem
 class Cgbbank(scrapy.Spider):
     name = "cgb"
     allowed_domains = ["cgbchina.com"]
@@ -19,10 +19,10 @@ class Cgbbank(scrapy.Spider):
         # print response.body
         indatas = response.xpath('//tr[@class="bg2"]')
         # print len(indatas)
-        # item = CgbFundsItem()
+        # item = FundsInfoItem()
         # item["pid"] = "test"
         for data in indatas:
-            item = CgbFundsItem()
+            item = FundsInfoItem()
             item["pname"] = data.xpath('normalize-space(./td[@class="name"]/a/text())').extract()[0]
         
             item["pid"] = data.xpath('./td[@class="name"]/a/@href').extract()[0].split('productno=')[-1]

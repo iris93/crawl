@@ -3,7 +3,7 @@
 import scrapy
 import json
 import re
-from ccb_funds.items import PinganFundsItem
+from ccb_funds.items import FundsInfoItem
 class Pinganbank(scrapy.Spider):
     name = "pingan"
     allowed_domains = ["pingan.com"]
@@ -28,7 +28,7 @@ class Pinganbank(scrapy.Spider):
         print len(datas[0]["recommendProducts"])
         for data_list in datas:
             for data in data_list["recommendProducts"]:
-                item = PinganFundsItem()
+                item = FundsInfoItem()
                 item["pid"] = data["prdCode"]+","
                 item["pname"] = data["recommendName"]
                 item["prate"] = data["newIndexContent"]
@@ -44,7 +44,7 @@ class Pinganbank(scrapy.Spider):
         datas = json.loads(response.body)["data"]["compFinancialProducts"]
         print len(datas)
         for data in datas:
-            item = PinganFundsItem()
+            item = FundsInfoItem()
             item["pid"] = data["prdCode"]
             item["pname"] = data["prdName"]
             item["prate"] = data["indexContent"]

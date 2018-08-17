@@ -107,3 +107,10 @@ class IcbcFundsItem(scrapy.Item):
 
 class FindBkItem(scrapy.Item):
     pname = scrapy.Field()
+
+class FundsInfoItem(scrapy.Item):
+    pid = scrapy.Field()
+    pname = scrapy.Field()
+    prate = scrapy.Field()
+    pfloor = scrapy.Field()
+    pperiod = scrapy.Field()    

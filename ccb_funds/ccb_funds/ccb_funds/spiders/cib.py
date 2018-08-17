@@ -3,7 +3,7 @@
 import scrapy
 import json
 import re
-from ccb_funds.items import CibFundsItem
+from ccb_funds.items import FundsInfoItem
 class Cibbank(scrapy.Spider):
     name = "cib"
     allowed_domains = ["cib.com"]
@@ -21,7 +21,7 @@ class Cibbank(scrapy.Spider):
         print len(indatas)
         
         for data in indatas:
-            item = CibFundsItem()
+            item = FundsInfoItem()
             try :
                 item["pname"] = data.xpath('./td')[0].xpath('./a/text()').extract()[0]
             except:

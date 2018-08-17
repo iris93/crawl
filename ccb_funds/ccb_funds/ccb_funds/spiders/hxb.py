@@ -3,7 +3,7 @@
 import scrapy
 import json
 import re
-from ccb_funds.items import HxbFundsItem
+from ccb_funds.items import FundsInfoItem
 class Hxbank(scrapy.Spider):
     name = "hxb"
     allowed_domains = ["hxb.com"]
@@ -20,7 +20,7 @@ class Hxbank(scrapy.Spider):
         print datas[0].xpath('normalize-space(./div/ul/li/span[@class="highlight"]/text())').extract()[0].encode("utf-8")
 
         for data in datas:
-            item = HxbFundsItem()
+            item = FundsInfoItem()
             # item["pid"] = 
             item["pname"] = data.xpath('./div/p/a/text()').extract()[0]
             item["prate"] = data.xpath('normalize-space(./div/div[@class="box_lf"]/p[@class="box_num"]/text())').extract()[0]

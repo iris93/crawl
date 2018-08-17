@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from ccb_funds.items import FindBkItem
+from ccb_funds.items import FundsInfoItem
  
 class MeijuSpider(scrapy.Spider):
     name = "test"
@@ -12,7 +12,7 @@ class MeijuSpider(scrapy.Spider):
         print "打印response"
         print movies
         for each_movie in movies:
-            item = FindBkItem()
+            item = FundsInfoItem()
             # print each_movie
             # item['name'] = each_movie.xpath('./h5/a/@title').extract()[0]
             item['name'] = 'test'

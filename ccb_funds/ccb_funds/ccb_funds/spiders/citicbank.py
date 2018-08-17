@@ -4,7 +4,7 @@ import scrapy
 import json
 import re
 from bs4 import BeautifulSoup
-from ccb_funds.items import CiticbankFundsItem
+from ccb_funds.items import FundsInfoItem
 
 class Citicbank(scrapy.Spider):
     name = "citicbank"
@@ -26,7 +26,7 @@ class Citicbank(scrapy.Spider):
         datas = json.loads(response.body)['content']['resultList']
         print datas[0]
         for data in datas:
-            item = CiticbankFundsItem()
+            item = FundsInfoItem()
             item["pid"] = data['prdNo']
             item["pname"] = data['prdName']
             item["prate"] = data['incomerate']

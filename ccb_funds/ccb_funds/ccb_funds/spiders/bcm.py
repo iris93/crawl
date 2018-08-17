@@ -3,7 +3,7 @@
 import scrapy
 import json
 import re
-from ccb_funds.items import BcmFundsItem
+from ccb_funds.items import FundsInfoItem
 class Bcmbank(scrapy.Spider):
     name = "bcm"
     allowed_domains = ["bankcomm.com"]
@@ -27,7 +27,7 @@ class Bcmbank(scrapy.Spider):
         # print "内部网页"
         # print response.body
         indatas = response.xpath('//tr')
-        item = BcmFundsItem()
+        item = FundsInfoItem()
         for data in indatas:
             if u'产品名称' in data.xpath('./th/text()').extract()[0]:
                 # print "产品名称"
