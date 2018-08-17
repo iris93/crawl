@@ -21,10 +21,10 @@ class Citicbank(scrapy.Spider):
                 callback=self.parse)
 
     def parse(self, response):
-        print "打印response"
+        # print "打印response"
         # print response.body
         datas = json.loads(response.body)['content']['resultList']
-        print datas[0]
+        # print datas[0]
         for data in datas:
             item = FundsInfoItem()
             item["pid"] = data['prdNo']

@@ -15,10 +15,10 @@ class Cibbank(scrapy.Spider):
             callback=self.parse)
 
     def parse(self, response):
-        print "内部网页"
+        # print "内部网页"
         # print response.body
         indatas = response.xpath('//tbody/tr')
-        print len(indatas)
+        # print len(indatas)
         
         for data in indatas:
             item = FundsInfoItem()

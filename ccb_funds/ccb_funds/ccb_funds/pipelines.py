@@ -10,7 +10,7 @@ import pandas as pd
 class CcbFundsPipeline(object):
 
     def open_spider(self, spider):
-        self.filename = "{}_funds.csv".format(spider.name)
+        self.filename = "result/{}_funds.csv".format(spider.name)
 
     	# self.file_name = open("{}_funds.txt".format(spider.name), "a")
 
@@ -24,7 +24,7 @@ class CcbFundsPipeline(object):
         text = json.dumps(temp, ensure_ascii=False)
         dft=pd.read_json(text,orient='records')
         try:
-            dfin = pd.read_csv("{}_funds.csv".format(spider.name),encoding='utf_8_sig') 
+            dfin = pd.read_csv(self.filename,encoding='utf_8_sig') 
             self.dfout = dfin.append(dft)
         except IOError:
             self.dfout = dft

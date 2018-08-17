@@ -50,15 +50,15 @@ class Cebcbank(scrapy.Spider):
                 callback=self.parse)
 
     def parse(self, response):
-        print "打印response"
-        print len(response.xpath('//div[@class="lccp_main_content_tx"]/ul/li'))
+        # print "打印response"
+        # print len(response.xpath('//div[@class="lccp_main_content_tx"]/ul/li'))
         # datas = response.xpath('//div[@class="lccp_main_content_tx"]/ul/li')
         datas = response.xpath('//div[@class="lccp_main_content_lb"]/table/tbody/tr')
         # print len(datas)
         for data in datas[1:]:
             item = FundsInfoItem()
             temp = data.xpath('./td')
-            print len(temp)
+            # print len(temp)
             item["pid"] = temp[0].xpath('./a/@data-analytics-click').extract()[0].split('-')[-1]
             item["pname"] = temp[0].xpath('normalize-space(./a/text())').extract()[0]
             item["prate"] = temp[5].xpath('normalize-space(./div/span/text())').extract()[0]

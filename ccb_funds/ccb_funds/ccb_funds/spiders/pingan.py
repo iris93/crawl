@@ -23,9 +23,9 @@ class Pinganbank(scrapy.Spider):
                 callback=self.parsedq)
 
     def parsehq(self, response):
-        print "打印response"
+        # print "打印response"
         datas = json.loads(response.body)["data"]["recommendAreas"]
-        print len(datas[0]["recommendProducts"])
+        # print len(datas[0]["recommendProducts"])
         for data_list in datas:
             for data in data_list["recommendProducts"]:
                 item = FundsInfoItem()
@@ -40,9 +40,9 @@ class Pinganbank(scrapy.Spider):
                 yield item
 
     def parsedq(self,response):
-        print "打印response"
+        # print "打印response"
         datas = json.loads(response.body)["data"]["compFinancialProducts"]
-        print len(datas)
+        # print len(datas)
         for data in datas:
             item = FundsInfoItem()
             item["pid"] = data["prdCode"]
