@@ -1,0 +1,15 @@
+工商银行icbc
+农业银行abc
+建设银行ccb
+中国银行boc
+交通银行bcm
+兴业银行cib
+浦发银行spdb
+光大银行ceb
+民生银行cmbc
+广发银行cgb
+华夏银行hxb
+平安银行pingan
+中信银行citicbank
+浙商银行czb
+恒丰银行hfbank

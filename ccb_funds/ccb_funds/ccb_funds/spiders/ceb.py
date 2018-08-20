@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# 中信银行
+# 光大银行
 import scrapy
 import json
 import re
