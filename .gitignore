@@ -1,5 +1,6 @@
-.pyc
-.csv
-.zip
-.rar
+*.pyc
+*.csv
+*.zip
+*.rar
+*.pdf
 
