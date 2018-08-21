@@ -13,12 +13,10 @@ class czbSpider(scrapy.Spider):
 
 
     def start_requests(self):
-        for i in range(1,10):
-            curpage = i
-            yield scrapy.FormRequest(
-                url = self.start_urls[0],
-                method = 'GET',
-                callback=self.parse_links)
+        yield scrapy.FormRequest(
+            url = self.start_urls[0],
+            method = 'GET',
+            callback=self.parse_links)
 
     def parse(self, response):
         page = response.text
@@ -39,14 +37,13 @@ class czbSpider(scrapy.Spider):
         # print len(links)
         # print links[0]
         base = 'http://www.czbank.com/cn/personal/investment/issue/201608/'
-        for link in links[0:2]:
+        for link in links:
             self.name = link.xpath('@oldsrc').extract()[0]
             url = base + self.name
             # print url
             yield scrapy.Request(url=url,method = 'GET',callback=self.parse_pdf)
 
     def parse_pdf(self,response):
-        # result=response.xpath('//div[@class="page"]//div[@class="textLayer"]')
         print response.url
         filename = 'pdf/'+response.url.split('/')[-1]
         f = open(filename,'wb')
