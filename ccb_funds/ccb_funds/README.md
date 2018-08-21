@@ -9,4 +9,5 @@ scrapy crawl spider-name
     pandas
 
 爬虫方法：
-    进入子目录执行bash reCrawl.sh，重新爬取所有数据
+    1.进入子目录执行bash reCrawl.sh，重新爬取所有数据
+    
