@@ -3,7 +3,6 @@
 import scrapy
 import json
 import re
-from bs4 import BeautifulSoup
 from ccb_funds.items import FundsInfoItem
 
 class Citicbank(scrapy.Spider):
