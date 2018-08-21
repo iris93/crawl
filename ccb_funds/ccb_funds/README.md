@@ -10,4 +10,5 @@ scrapy crawl spider-name
 
 爬虫方法：
     1.进入子目录执行bash reCrawl.sh，重新爬取所有数据
+    2.结果在result目录下
     
