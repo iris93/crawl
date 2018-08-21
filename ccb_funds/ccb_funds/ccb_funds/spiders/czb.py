@@ -3,7 +3,8 @@
 import scrapy
 import re
 from ccb_funds.items import FundsInfoItem
-
+import pdfplumber
+import pandas as pd
 
 class czbSpider(scrapy.Spider):
     name = 'czb'
@@ -38,7 +39,7 @@ class czbSpider(scrapy.Spider):
         # print len(links)
         # print links[0]
         base = 'http://www.czbank.com/cn/personal/investment/issue/201608/'
-        for link in links:
+        for link in links[0:2]:
             self.name = link.xpath('@oldsrc').extract()[0]
             url = base + self.name
             # print url
@@ -51,3 +52,22 @@ class czbSpider(scrapy.Spider):
         f = open(filename,'wb')
         f.write(response.body)
         f.close()
+        
+        pdf = pdfplumber.open(filename)
+
+        p0 = pdf.pages[0]#注意此处的pages是一个列表，索引是从0开始的
+
+        table = p0.extract_table()
+
+        item = FundsInfoItem()
+        item["pid"] = "".join(table[2][1].split())
+        item["pname"] = table[1][1]
+        item["prate"] = table[11][1]
+        item["pperiod"] = table[10][1]
+        item["pfloor"] = "".join(table[5][1].split())
+        yield item
+
+        # df = pd.DataFrame(table)
+        # output = 'csv/'+response.url.split('/')[-1].split('.')[0]
+        # df.to_csv(output,encoding='utf-8')
+
