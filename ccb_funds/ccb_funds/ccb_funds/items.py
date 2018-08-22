@@ -13,4 +13,5 @@ class FundsInfoItem(scrapy.Item):
     pname = scrapy.Field()
     prate = scrapy.Field()
     pfloor = scrapy.Field()
-    pperiod = scrapy.Field()    
+    pperiod = scrapy.Field()
+    pscale = scrapy.Field()    
