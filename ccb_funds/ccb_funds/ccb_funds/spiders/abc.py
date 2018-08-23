@@ -3,8 +3,8 @@
 import scrapy
 import json
 import re
-import pdfplumber
 from ccb_funds.items import FundsInfoItem
+import pdfplumber
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")

@@ -4,6 +4,11 @@ import scrapy
 import json
 import re
 from ccb_funds.items import FundsInfoItem
+import pdfplumber
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+sys_encoding = sys.getfilesystemencoding()
 class Bcmbank(scrapy.Spider):
     name = "bcm"
     allowed_domains = ["bankcomm.com"]
@@ -25,7 +30,6 @@ class Bcmbank(scrapy.Spider):
                 yield scrapy.Request(url=url,method = 'GET',callback=self.parsein)
     def parsein(self, response):
         # print "内部网页"
-        # print response.body
         indatas = response.xpath('//tr')
         item = FundsInfoItem()
         for data in indatas:
@@ -44,5 +48,58 @@ class Bcmbank(scrapy.Spider):
             if u'投资期限' in data.xpath('./th/text()').extract()[0]:
                 # print "投资期限"
                 item["pperiod"] = data.xpath('normalize-space(./td/text())').extract()[0]
+        url = response.xpath('//ul[@class="title-ul"]/li/a')
+        # print len(url)
+        # yield item
+        if len(url)<1:
+            item["pscale"] = "not found"
+            yield item
+        else:
+            pdfUrl = url.xpath('@href').extract()[0]
+            # print pdfUrl
+            yield scrapy.FormRequest(url=pdfUrl,method='GET',meta={"item":item},callback=self.get_scale)
+
+    def get_scale(self,response):
+        item = response.meta['item']
+        filename = 'pdf/'+response.url.split('/')[-1]
+        f = open(filename,'wb')
+        f.write(response.body)
+        f.close()
+        pdf = pdfplumber.open(filename)
+        item["pscale"] = self.getScale(pdf)
         yield item
-        
+
+    def printcn(self,msg):
+       print(msg.decode('utf-8').encode(sys_encoding))   
+
+    def getScale(self,pdf):
+        p0 = pdf.pages[1:3]#注意此处的pages是一个列表，索引是从0开始的
+        for i in range(len(p0)):
+            table = p0[i].extract_tables()
+            for item in table:
+                for subitem in item:
+                    for j in range(len(subitem)):
+                        rule = r'(.产品.*?规模)'.decode('utf-8')
+                        reg = re.compile(rule)
+                        finfos = reg.findall(subitem[j])
+                        if len(finfos)>0:
+                            return "".join(subitem[j+1].split())
+                        else:
+                            continue
+                    # if u'产品规模' in subitem:
+                    #     print "found"
+                    #     p=subitem.index(u'产品规模')
+                    #     self.printcn(subitem[p+1])
+                    #     return "".join(subitem[p+1].split())
+                    # elif u'单期产品规模' in subitem:
+                    #     print "found"
+                    #     p=subitem.index(u'单期产品规模')
+                    #     self.printcn(subitem[p+1])
+                    #     return "".join(subitem[p+1].split())
+                    # elif u'产品签约规模' in subitem:
+                    #     print "found"
+                    #     p=subitem.index(u'产品签约规模')
+                    #     self.printcn(subitem[p+1])
+                    #     return "".join(subitem[p+1].split())
+                    # else:print "not found"
+        return "not found"
