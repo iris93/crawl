@@ -62,6 +62,7 @@ class czbSpider(scrapy.Spider):
         item["prate"] = table[11][1]
         item["pperiod"] = table[10][1]
         item["pfloor"] = "".join(table[5][1].split())
+        item['pscale'] = "".join(table[4][1].split())
         yield item
 
         # df = pd.DataFrame(table)

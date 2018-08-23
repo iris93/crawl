@@ -3,14 +3,19 @@
 import scrapy
 import json
 import re
+import pdfplumber
 from ccb_funds.items import FundsInfoItem
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+sys_encoding = sys.getfilesystemencoding()
 class Pinganbank(scrapy.Spider):
     name = "abc"
     allowed_domains = ["abchina.com"]
     start_urls = ['http://ewealth.abchina.com/app/data/api/DataService/BoeProductV2?s=20&o=0&w=%25E5%258F%25AF%25E5%2594%25AE%257C%257C%257C%257C%257C%257C%257C1%257C%257C0%257C%257C0&i=',\
     'http://ewealth.abchina.com/fs']
     def start_requests(self):
-        for i in range(1,2):
+        for i in range(1,7):
             yield scrapy.FormRequest(
                 url = self.start_urls[0]+str(i),
                 method = 'GET',
@@ -20,7 +25,7 @@ class Pinganbank(scrapy.Spider):
         # print "打印response"
         datas=response.xpath('//Table')
         # print len(datas)
-        for data in datas[0:1]:
+        for data in datas:
             item = FundsInfoItem()
             item["pid"] = data.xpath('./ProductNo/text()').extract()[0]
             item["pname"] = data.xpath('./ProdName/text()').extract()[0]
@@ -48,3 +53,23 @@ class Pinganbank(scrapy.Spider):
         f = open(filename,'wb')
         f.write(response.body)
         f.close()
+        pdf = pdfplumber.open(filename)
+        item["pscale"] = self.getScale(pdf)
+        yield item
+
+    def printcn(self,msg):
+       print(msg.decode('utf-8').encode(sys_encoding))
+
+    def getScale(self,pdf):
+        p0 = pdf.pages[1:3]#注意此处的pages是一个列表，索引是从0开始的
+        for i in range(len(p0)):
+            table = p0[i].extract_tables()
+            for item in table:
+                for subitem in item:
+                    if u'产品认购规模' in subitem:
+                        print "found"
+                        p=subitem.index(u'产品认购规模')
+                        self.printcn(subitem[p+1])
+                        return "".join(subitem[p+1].split())
+                    else:print "not found"
+        return "not found"
