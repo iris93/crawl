@@ -33,11 +33,11 @@ class Citicbank(scrapy.Spider):
             item["prate"] = data['incomerate']
             item["pperiod"] = data['dayDeadLine']
             item["pfloor"] = data['firstAmt']
-            item["pscale"] = "not found"
             pdfUrl = 'https://etrade.citicbank.com/portalweb/findoc/'+str(item["pid"])+'00.html'
-            subResponse= Request(url=pdfUrl,method='GET',meta={"item":item},callback=self.get_scale,errback=self.errors)
-            yield subResponse
-            # yield item
+            item["pscale"] = pdfUrl
+            # subResponse= Request(url=pdfUrl,method='GET',meta={"item":item},callback=self.get_scale,errback=self.errors)
+            # yield subResponse
+            yield item
  
     def get_scale(self,response):
         # print "产品说明书部分"

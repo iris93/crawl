@@ -3,7 +3,7 @@
 import scrapy
 import json
 import re
-import urllib
+import urllib2
 from ccb_funds.items import FundsInfoItem
 
 # class CcbGetnews(scrapy.Spider):
@@ -43,16 +43,16 @@ class CcbSpider(scrapy.Spider):
                 'Connection': 'keep-alive'
             }
             data = {'jsoncallback':'jQuery191036942510719116894_1533864732025','params.code': params_code}
-            data = urllib.parse.urlencode(data).encode('utf-8')
-            req = urllib.request.Request(url, headers=headers, data=data)
-            page = urllib.request.urlopen(req).read()
+            data = urllib2.parse.urlencode(data).encode('utf-8')
+            req = urllib2.request.Request(url, headers=headers, data=data)
+            page = urllib2.request.urlopen(req).read()
             page = page.decode('gbk')
             begin = re.search('jQuery191036942510719116894_1533864732025', page).end()
             page = json.loads(page[begin + 1:-1])
             page = page["pubNoticeUrl"]
             news_url = re.findall(r'@@\|.{70,130}\|@#', page)[0][3:-3]
-            req2 = urllib.request.Request(news_url, headers=headers)
-            page_detail = urllib.request.urlopen(req2).read()
+            req2 = urllib2.request.Request(news_url, headers=headers)
+            page_detail = urllib2.request.urlopen(req2).read()
             reg_rate = r'>(.{0,5}%)<'
             reg_rate = re.compile(reg_rate)
             last_rate = reg_rate.search(page_detail.decode('utf-8')).group(1)
