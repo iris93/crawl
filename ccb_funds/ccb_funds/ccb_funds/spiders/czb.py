@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # 浙商银行
+# 完成
 import scrapy
 import re
 from ccb_funds.items import FundsInfoItem

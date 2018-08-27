@@ -10,7 +10,7 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 sys_encoding = sys.getfilesystemencoding()
 class Bcmbank(scrapy.Spider):
-    name = "bcm"
+    name = "bcm_new"
     allowed_domains = ["bankcomm.com"]
     start_urls = ['http://www.bankcomm.com/BankCommSite/jyjr/cn/lcpd/queryFundInfoListNew.do']
     def start_requests(self):
@@ -50,14 +50,14 @@ class Bcmbank(scrapy.Spider):
                 item["pperiod"] = data.xpath('normalize-space(./td/text())').extract()[0]
         url = response.xpath('//ul[@class="title-ul"]/li/a')
         # print len(url)
-        yield item
-        # if len(url)<1:
-        #     item["pscale"] = "not found"
-        #     yield item
-        # else:
-        #     pdfUrl = url.xpath('@href').extract()[0]
-        #     # print pdfUrl
-        #     yield scrapy.FormRequest(url=pdfUrl,method='GET',meta={"item":item},callback=self.get_scale)
+        # yield item
+        if len(url)<1:
+            item["pscale"] = "not found"
+            yield item
+        else:
+            pdfUrl = url.xpath('@href').extract()[0]
+            # print pdfUrl
+            yield scrapy.FormRequest(url=pdfUrl,method='GET',meta={"item":item},callback=self.get_scale)
 
     def get_scale(self,response):
         item = response.meta['item']

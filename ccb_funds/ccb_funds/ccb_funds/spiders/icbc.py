@@ -9,7 +9,7 @@ class Cibbank(scrapy.Spider):
     allowed_domains = ["icbc.com"]
     start_urls = ['https://mybank.icbc.com.cn/servlet/ICBCBaseReqServletNoSession?dse_operationName=per_FinanceCurProListP3NSOp&p3bank_error_backid=120103&Area_code=4000&requestChannel=302&pageFlag=']
     def start_requests(self):
-        for i in range(0,20):
+        for i in range(1,15):
             yield scrapy.FormRequest(
                 url = self.start_urls[0]+str(i),
                 method = 'GET',

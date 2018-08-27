@@ -3,8 +3,6 @@ import scrapy
 import json
 import re
 from ccb_funds.items import FundsInfoItem
-
-
 class SpdbSpider(scrapy.Spider):
     name = 'spdb'
     allowed_domains = ['spdb.com.cn']

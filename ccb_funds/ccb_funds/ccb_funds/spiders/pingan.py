@@ -33,6 +33,7 @@ class Pinganbank(scrapy.Spider):
                 item["pname"] = data["recommendName"]
                 item["prate"] = data["newIndexContent"]
                 item["pperiod"] = data["recommendType"]
+                item["pscale"] = data["redirectUrl"]
                 if data["product"].has_key("finaSaleStatusInfo"):
                     item["pfloor"] = data["product"]["finaSaleStatusInfo"]["minAmount"]
                 elif data["product"].has_key("fundSaleStatusInfo"):

@@ -33,9 +33,8 @@ class Pinganbank(scrapy.Spider):
             item["pperiod"] = data.xpath('./ProdLimit/text()').extract()[0]
             item["pfloor"] = data.xpath('./PurStarAmo/text()').extract()[0]
             productUrl = self.start_urls[1]+'/'+str(item["pid"])+'.htm'
-            # print productUrl
-            # productUrl = 'http://ewealth.abchina.com/fs/ADRY180122B.htm'
-            yield scrapy.FormRequest(url=productUrl,method='GET',meta={"item":item},callback=self.parse_pdf)
+            yield item
+            # yield scrapy.FormRequest(url=productUrl,method='GET',meta={"item":item},callback=self.parse_pdf)
     
     def parse_pdf(self,response):
         # print response

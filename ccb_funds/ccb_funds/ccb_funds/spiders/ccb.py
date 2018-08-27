@@ -75,4 +75,5 @@ class CcbSpider(scrapy.Spider):
             item["prate"] = data['yieldRate']
             item["pperiod"] = data['investPeriod']
             item["pfloor"] = data['purFloorAmt']
+            # item["pscale"] = data['instructionUrl']
             yield item

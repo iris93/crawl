@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # 民生银行
+# 没有产品说明书
 import scrapy
 import json
 import re
